@@ -2,7 +2,7 @@ import json
 import os
 
 import firebase_admin
-from firebase_admin import credentials, storage
+from firebase_admin import credentials, messaging, storage
 
 
 def setup() -> None:
@@ -16,16 +16,17 @@ def setup() -> None:
     bucket.make_public()
 
 
-def upload_image(folder, content_type, file, id) -> str:
-    bucket = storage.bucket()
-    blob = bucket.blob(f"{folder}/{id}")
-    blob.upload_from_file(file_obj=file, content_type=content_type)
-    blob.make_public()
+def new_user_notification(fcm_token: str, title: str, body: str, type: str, id: str):
+    data = {"type": type, "id": id}
+    message = messaging.Message(
+        notification=messaging.Notification(
+            title=title,
+            body=body,
+        ),
+        android=messaging.AndroidConfig(
+            data=data,
+        ),
+        token=fcm_token,
+    )
 
-    return blob.public_url
-
-
-def delete_image(folder, id):
-    bucket = storage.bucket()
-    blob = bucket.blob(f"{folder}/{id}")
-    blob.delete()
+    return messaging.send(message)
