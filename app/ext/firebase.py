@@ -16,16 +16,16 @@ def setup() -> None:
     bucket.make_public()
 
 
-def new_user_notification(fcm_token: str, title: str, body: str, type: str, id: str):
-    data = {"type": type, "id": id}
+def new_user_notification(fcm_token: str, title: str, body: str):
+    # data = {"type": type, "id": id}
     message = messaging.Message(
         notification=messaging.Notification(
             title=title,
             body=body,
         ),
-        android=messaging.AndroidConfig(
-            data=data,
-        ),
+        # android=messaging.AndroidConfig(
+        #     data=data,
+        # ),
         token=fcm_token,
     )
 

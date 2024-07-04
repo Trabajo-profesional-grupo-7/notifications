@@ -7,6 +7,7 @@ services:
     container_name: notifications
     restart: always
     ports:
-      - ${PORT}:8004
+      - ${PORT}:${PORT}
     environment:
       - FIREBASE_CREDENTIALS_JSON=${FIREBASE_CREDENTIALS_JSON}
+      - USERS_URL=${USERS_URL}
