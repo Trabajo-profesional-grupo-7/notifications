@@ -35,10 +35,9 @@ def send_notification(notification: NotificationRequest):
 )
 async def post_fcm_token(fcm_token: UpdateFCMTokenRequest):
     try:
-        services.update_fcm_token(
+        return services.update_fcm_token(
             user_id=fcm_token.user_id, fcm_token=fcm_token.fcm_token
         )
-        return HTTPException(status_code=status.HTTP_200_OK)
     except Exception as e:
         raise HTTPException(
             detail="Error updating FCM token",
