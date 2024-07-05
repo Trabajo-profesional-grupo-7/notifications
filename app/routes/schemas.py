@@ -8,4 +8,5 @@ class NotificationRequest(BaseModel):
 
 
 class UpdateFCMTokenRequest(BaseModel):
+    user_id: int
     fcm_token: str

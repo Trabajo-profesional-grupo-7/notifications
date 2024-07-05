@@ -33,9 +33,11 @@ def send_notification(notification: NotificationRequest):
     tags=["Notifications"],
     description="Updates the fcm_token for a certain user_id.",
 )
-async def post_fcm_token(user_id: int, fcm_token: UpdateFCMTokenRequest):
+async def post_fcm_token(fcm_token: UpdateFCMTokenRequest):
     try:
-        services.update_fcm_token(user_id=user_id, fcm_token=fcm_token.fcm_token)
+        services.update_fcm_token(
+            user_id=fcm_token.user_id, fcm_token=fcm_token.fcm_token
+        )
         return HTTPException(status_code=status.HTTP_200_OK)
     except Exception as e:
         raise HTTPException(
